@@ -1,0 +1,22 @@
+https://dart.cn/get-dart
+https://dart.cn/tutorials/server/get-started
+https://dart.cn/tutorials/server/cmdline
+
+1.运行dart文件
+  dart run xxx.dart
+
+2.创建应用
+  dart create -t console-full calc
+  其中
+  “calc”是应用名称
+　bin/cacl.dart: 主要的Dart源文件，包含一个顶层main()函数，是应用的入口。
+  lib/calc.dart: 额外的 Dart 文件，包含一些功能性的函数方法，这些函数方法将会导入到calc.dart文件中。
+  pubspec.yaml: 包含应用的元数据，包括应用依赖的package信息以及所需的版本等。　
+
+  运行应用
+  cd calc
+  dart run
+
+  修改应用
+  编辑 lib/calc.dart，保存后，重新dart run
+
