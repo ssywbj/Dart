@@ -20,3 +20,5 @@ https://dart.cn/tutorials/server/cmdline
   修改应用
   编辑 lib/calc.dart，保存后，重新dart run
 
+  疑问
+  calc项目是在Linux环境下建立的应用，可是在Mac中却跑不起来，目前还不知道为什么！然后在Mac环境新建立tmp应用，就可以跑起来了。
