@@ -101,4 +101,36 @@ multi-line strings like this one.
     };
     //constantSet.add('helium');//错误：无法改变常量的值
     print("constant set: $constantSet");
+
+    //Map
+    var gifts = {
+        //Key: Value
+        'first': 'partridge',
+        'second': 'turtledoves',
+        'fifth': 'golden rings'
+    };
+    var nobleGases = {
+        2: 'helium',
+        10: 'neon',
+        18: 'argon',
+    };
+    //或
+    var gifts1 = Map();
+    gifts1['first'] = 'partridge';
+    gifts1['second'] = 'turtledoves';
+    gifts1['first'] = 'golden rings';
+
+    print('gifts map: $gifts');
+    print("gifts map key value: ${gifts['first']}");//通过key获取value
+    print("gifts map key value: ${gifts['sixth']}");//通过key获取value
+    gifts['sixth'] = "Ssywbj";//添加key-value
+    print("gifts map key value: ${gifts['sixth']}");//通过key获取value
+    print("gifts map length: ${gifts.length}");//获取key-value的对数
+    //创建Map运行时常量，要在Map字面量前加上关键字const
+    final constantMap = const {
+        2: 'helium',
+        10: 'neon',
+        18: 'argon',
+    };
+    print('const map: $constantMap');
 }
