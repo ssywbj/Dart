@@ -133,4 +133,24 @@ multi-line strings like this one.
         18: 'argon',
     };
     print('const map: $constantMap');
+
+    //Rune
+    //Rune用来表示字符串中的UTF-32 编码字符。
+    //Unicode定义全球的书写系统编码，系统中使用的所有字母、数字和符号都对应唯一的数值编码。由于Dart字符串是一系列UTF-16编码单元，因此要在字符串中表示32位Unicode值需要特殊语法支持。
+    //表示Unicode编码的常用方法是\uXXXX, XXXX是一个4位的16进制数。例如，心形符号(♥)是\u2665。对于特殊的非4个数值的情况，把编码值放到大括号中即可。例如，emoji的笑脸是\u{1f600}。
+    //String类有一些属性可以获得rune数据，属性codeUnitAt和codeUnit返回16位编码数据，属性runes获取字符串中的Rune。
+
+    //演示Rune、16-bit code units和32-bit code points之间的关系
+    var clapping = '\u{1f44f}';
+    print(clapping);
+    print(clapping.codeUnits);
+    print(clapping.runes.toList());
+    Runes input = new Runes('\u2665 \u{1f605} \u{1f60e} \u{1f47b} \u{1f596} \u{1f44d}');
+    print(new String.fromCharCodes(input));
+
+    //Symbol
+    //Symbol对象表示程序中声明的运算符或者标识符。在要按名称引用标识符的API时， Symbol非常有用。因为代码压缩后会改变标识符的名称，但不会改变标识符的符号。通过字面量Symbol，也就是标识符前面添加一个#号，来获取标识符的Symbol 。
+    //#radix
+    //#bar
+
 }
