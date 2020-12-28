@@ -22,6 +22,37 @@ void main(){
     print(say2("wbj", "ssy", "BBB"));
     print(say2("wbj", "ssy", "BBB", "CCC"));
     doStuff();
+
+    var list = ['apples', 'bananas', 'oranges'];
+    list.forEach((item){//匿名函数
+        print('${list.indexOf(item)}: $item');
+    });
+    print('如果函数只有一条语句，可以使用箭头(=>)简写');
+    list.forEach((item) => print('${list.indexOf(item)}: $item'));
+
+    //创建一个加2的函数
+    var add2 = makeAdder(2);
+    print("add 2 function: ${add2(3)}");
+    //创建一个加3的函数
+    var add3 = makeAdder(3);
+    print("add 3 function: ${add3(7)}");
+
+    var x;
+    print('比较顶级函数：${x == foo}');
+    x = foo;
+    print('比较顶级函数：${x == foo}');
+    x = A.bar;
+    print('比较静态方法：${A.bar == x}');
+    var v = A(); //A的1号实例
+    var w = A(); //A的2号实例
+    var y = w;
+    x = w.baz;
+    //两个闭包引用同一实例(2号)，它们相等
+    print("比较实例方法：${y.baz == x}");
+    //两个闭包引用非同一个实例，它们不相等
+    print("比较实例方法：${v.baz == w.baz}");
+
+    print('函数都有返回值：${foo2() == null}');
 }
 
 //函数示例
@@ -79,3 +110,18 @@ doStuff({List<int> list = const [1, 2, 3],
     print("$list");
     print("$map");
 }
+
+//闭包即函数对象，即使函数对象的调用在它原始作用域之外，但依然能够访问在它词法作用域内的变量。
+Function makeAdder(num addBy){
+    return (num i) => addBy + i;
+}
+
+void foo(){} //顶级函数
+
+class A {
+    static void bar() {} //静态方法
+    void baz() {} //示例方法
+}
+
+//所有函数都会返回一个值。如果没有明确指定返回值，函数体会被隐式的添加return null;语句
+foo2(){}
