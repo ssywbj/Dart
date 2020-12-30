@@ -36,6 +36,8 @@ void main(){
     var number = 101; //确认变量值小于100
     //运行：dart --enable-asserts flow_control.dart
     assert(number < 100);
+    //assert的第二个参数可以为其添加一个字符串消息
+    //assert(number < 100, 'the number should bigger than 100');
     print('no exec to here!');
-    //assert语句只在开发环境中有效，在生产环境无效；Flutter中的assert只在debug模式中有效。开发用的工具，如 dartdevc 默认开启assert 功能。其他的一些工具，例如dart和dart2js, 支持通过命令行开启assert：--enable-asserts
+    //assert语句只在开发环境中有效，在生产环境无效；Flutter中的assert只在debug模式中有效。开发用的工具，如dartdevc默认开启assert功能。其他的一些工具，例如dart和dart2js, 支持通过命令行开启assert：--enable-asserts
 }
