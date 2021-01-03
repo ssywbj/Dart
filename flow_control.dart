@@ -40,4 +40,55 @@ void main(){
     //assert(number < 100, 'the number should bigger than 100');
     print('no exec to here!');
     //assert语句只在开发环境中有效，在生产环境无效；Flutter中的assert只在debug模式中有效。开发用的工具，如dartdevc默认开启assert功能。其他的一些工具，例如dart和dart2js, 支持通过命令行开启assert：--enable-asserts
+
+    //异常
+    //和Java有所不同，Dart中的所有异常是非检查异常，方法不会声明它们抛出的异常，也不要求捕获任何异常。
+    //throw
+    //抛出异常示例
+    //throw FormatException('Expected at least 1 section');
+    //可以抛出任意的对象
+    //throw 'Out of llamas!';
+    //提示：高质量的代码通常会实现Error或Exception类型的异常抛出
+    //因为抛出异常是一个表达式，所以可以在 => 语句中使用，也可以在其他使用表达式的地方抛出异常，如
+    //void distanceTo(Point other) => throw UnimplementedError();
+    //catch
+    //捕获异常可以避免异常继续传递（除非重新抛出（rethrow）异常）
+    //捕获语句中可以同时使用on和catch，也可以单独分开使用。使用on来指定异常类型，使用catch来捕获异常对象
+    //catch()函数可以指定1到2个参数，第一个参数为抛出的异常对象，第二个为堆栈信息(一个StackTrace对象)
+    try{
+        print('1 + 2:${1 + 2}');
+    } on FormatException {
+        print('on format excepiotn');
+    }
+    try{
+        dynamic flag = true;
+        print(flag++);
+    } on FormatException { //一个特殊的异常
+        print('on format exception');
+    } on Exception catch(e) { //其他任何异常
+        print('on exception: $e');
+    } catch(e, s){ //没有指定的类型，处理所有异常
+        print('on catch: \n$e');
+        print('Stack trace: \n$s');
+    }
+    try{
+        misbehave();
+    } catch(e) {
+        print('main() finished handling ${e.runtimeType}.');
+    } finally {
+        print('on finally');
+    }
+    //finally
+    //不管是否抛出异常，finally中的代码都会被执行。如果catch没有匹配到异常，异常会在finally执行完成后，再次被抛出
+}
+
+//如果仅需要部分处理异常，那么可以使用关键字rethrow将异常重新抛出。
+void misbehave() {
+    try {
+        dynamic foo = true;
+        print(foo++); //Runtime error
+    } catch (e) {
+        print('misbehave() partially handled ${e.runtimeType}.');
+        rethrow; //Allow callers to see the exception.
+    }
 }
