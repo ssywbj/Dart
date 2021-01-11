@@ -1,6 +1,7 @@
+import 'dart:math';
 
 class Point{
-    num x; //变量x，初始值默认为null 
+    num x; //变量x，初始值默认为null
     num y;
     //所有实例变量都会隐式生成getter和setter方法
 }
@@ -13,8 +14,13 @@ class Point2{
         this.x = x;
         this.y = y;
     }*/
-    
-    Point2(this.x, this.y); //语法糖设置变量x
+
+    Point2(this.x, this.y); //语法糖设置变量x和y的值
+
+    Point2.origin(){ //命名构造函数
+        x = 21;
+        y = 23;
+    }
 
 }
 void main(){
@@ -54,4 +60,52 @@ void main(){
     print('pnt: ${pnt.x}, ${pnt.y}');
     pnt = new Point2(11, 6);
     print('pnt: ${pnt.x}, ${pnt.y}');
+    pnt = Point2.origin(); //使用命名构造函数
+    print('pnt: ${pnt.x}, ${pnt.y}');
+
+    //默认情况下，子类的构造函数会自动调用父类的默认构造函数(匿名，无参数)，父类的构造函数在子类构造函数体开始执行的位置被调用。
+    //如果父类中没有匿名无参的构造函数，则需要手工调用父类的其他构造函数：当前构造函数冒号(:)之后函数体之前使用super关键字调用父类构造函数。
+    var emp = Employee.fromJson({});
+    //在构造函数体执行之前初始化变量
+    Person.fromPoint({});
+    Person.withAssert(-1, 6);
+    Person.withSqrt(3, 4);
+    var psn = Person.single(30);
+    print('person:{${psn.x}, ${psn.y}}');
+}
+
+class Person {
+    String firstName;
+
+    Person.fromJson(Map map){
+        print('in Person');
+    }
+
+    num x, y, z;
+
+    Person.fromPoint(Map<String, num> json)
+        : x = json['1'],
+          y = json['2']{
+      print('in Person: Point($x, $y)');
+    }
+
+    //在开发期间，可以使用assert来验证输入的初始化列表
+    Person.withAssert(this.x, this.y) : assert(x >= 0, 'x need bigger than 0') {
+      print('In Person.withAssert(): ($x, $y)');
+    }
+
+    Person.withSqrt(this.x, this.y)
+        :z = sqrt(x * x + y * y){
+      print('In Person.withAssert(): ($x, $y, $z)');
+    }
+
+    Person(this.x, this.y);
+
+    Person.single(x) : this(x, 2); //构造函数重定向
+}
+
+class Employee extends Person {
+    Employee.fromJson(Map map) : super.fromJson(map){
+        print('in Employee');
+    }
 }
