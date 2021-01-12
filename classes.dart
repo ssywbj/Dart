@@ -21,7 +21,6 @@ class Point2{
         x = 21;
         y = 23;
     }
-
 }
 void main(){
     //var p1 = new Point();
@@ -72,6 +71,17 @@ void main(){
     Person.withSqrt(3, 4);
     var psn = Person.single(30);
     print('person:{${psn.x}, ${psn.y}}');
+
+    var logger = Logger('UI');
+    logger.log('Button clicked');
+
+    var rect = Rectangle(3, 4, 20, 15);
+    print('rect: ${rect.left}');
+    rect.right = 12;
+    print('rect: ${rect.left}');
+
+    print(greetBob(Person2('Kathy')));
+    print(greetBob(Impostor()));
 }
 
 class Person {
@@ -109,3 +119,77 @@ class Employee extends Person {
         print('in Employee');
     }
 }
+
+//常量构造函数
+//如果类生成的对象固定不变，那么就可以把这些对象定义为编译时常量。为此，需要定义一个const构造函数，并且声明所有实例变量为final。
+class ImmutablePoint{
+    static final ImmutablePoint origin = const ImmutablePoint(1, 2);
+
+    final num x, y;
+    const ImmutablePoint(this.x, this.y);
+}
+//注意：常量构造函数创建的实例并不总是常量
+
+//工厂构造函数
+//当执行构造函数并不总是创建类的新实例时，则使用factory关键字。例如，一个工厂构造函数可能会返回一个cache中的实例，或者可能返回一个子类的实例:
+class Logger{
+    final String name;
+    bool mute = false;
+
+    static final Map<String, Logger> _cache = <String, Logger>{};
+
+    factory Logger(String name) {
+        if (_cache.containsKey(name)) {
+            return _cache[name];
+        } else {
+            final logger = Logger._internal(name);
+            _cache[name] = logger;
+            return logger;
+        }
+    }
+
+    Logger._internal(this.name);
+
+    void log(String msg) {
+        if (!mute) print(msg);
+    }
+}
+
+//Getter和Setter
+//Getter和Setter是用于对象属性读和写的特殊方法。每个实例变量都有一个隐式Getter和Setter，
+//使用get和set关键字实现Getter和Setter，能够为实例创建额外的属性。
+class Rectangle {
+    num left, top, width, height;
+
+    Rectangle(this.left, this.top, this.width, this.height);
+
+    //定义两个计算属性：right和bottom
+    num get right => left + width;
+    set right(num value) => left = value - width;
+    num get bottom => top + height;
+    set bottom(num value) => top = value - height;
+}
+//最开始实现Getter和Setter也许是直接返回成员变量；随着需求变化，Getter和Setter可能需要进行计算处理
+//而使用方法来实现，但是调用对象的代码不需要做任何修改。
+
+//隐式接口
+//每个类都隐式定义了一个接口，接口包含类所有的实例成员及其实现的接口。如果要创建A类，A要支持B类的API，
+//但是不需要继承B的实现，那么可以通过A实现B的接口。
+//person类，隐式接口里面包含greet()方法声明
+class Person2 {
+    //包含在接口里，但只在当前库中可见。
+    final _name;
+
+    //不包含在接口里，因为这是构造函数。
+    Person2(this._name);
+
+    //包含在接口里。
+    String greet(String who) => 'Hello, $who. I am $_name.';
+}
+//person接口的实现
+class Impostor implements Person2 {
+    get _name => '';
+
+    String greet(String who) => 'Hi $who. Do you know who I am?';
+}
+String greetBob(Person2 person) => person.greet('Bob');
