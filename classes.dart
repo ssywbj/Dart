@@ -21,6 +21,16 @@ class Point2{
         x = 21;
         y = 23;
     }
+
+    //重写运算符
+    Point2 operator +(Point2 p) => Point2(x + p.x, y + p.y);
+    Point2 operator -(Point2 p) => Point2(x - p.x, y - p.y);
+
+    @override
+    void noSuchMethod(Invocation invocation) {
+        print('You tried to use a non-existent member: ' +
+            '${invocation.memberName}');
+    }
 }
 void main(){
     //var p1 = new Point();
@@ -82,6 +92,13 @@ void main(){
 
     print(greetBob(Person2('Kathy')));
     print(greetBob(Impostor()));
+
+    var p2 = Point2(9, 7);
+    var p3 = Point2(1, 3);
+    var p23 = p2 + p3;
+    print('p23: (${p23.x}, ${p23.y})');
+    var p23_ = p2 - p3;
+    print('p23_: (${p23_.x}, ${p23_.y})');
 }
 
 class Person {
