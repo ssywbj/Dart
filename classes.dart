@@ -99,6 +99,10 @@ void main(){
     print('p23: (${p23.x}, ${p23.y})');
     var p23_ = p2 - p3;
     print('p23_: (${p23_.x}, ${p23_.y})');
+
+    print('enum color index: ${Color.red.index}, ${Color.blue.index}, ${Color.green.index}');
+    List<Color> colors = Color.values;
+    print('enum color values: $colors');
 }
 
 class Person {
@@ -210,3 +214,48 @@ class Impostor implements Person2 {
     String greet(String who) => 'Hi $who. Do you know who I am?';
 }
 String greetBob(Person2 person) => person.greet('Bob');
+
+//枚举类型：一种特殊的类，用于表示数量固定的常量值。
+enum Color {
+    red,
+    green,
+    blue
+}
+
+//为类添加功能————Mixin
+//Mixin：复用类代码的一种途径，复用的类可以在不同层级，之间可以不存在继承关系
+//通过创建一个继承自Object且没有构造函数的类来实现Mixin，如果Mixin不希望作为常规类被使用，使用关键字mixin替换class，如：
+mixin Musical {
+    bool canPlayPiano = false;
+    bool canCompose = false;
+    bool canConduct = false;
+
+    void entertainMe() {
+        if (canPlayPiano) {
+            print('Playing piano');
+        } else if (canConduct) {
+            print('Waving hands');
+        } else {
+            print('Humming to self');
+        }
+    }
+}
+
+mixin Aggressive{
+}
+
+//通过with后面跟一个或多个mixin的名称，来使用Mixin
+class Musician extends Person2 with Musical {
+    Musician(String name) : super(name) {
+    }
+}
+
+class Maestro extends Person with Musical, Aggressive {
+    Maestro(Map map) : super.fromJson(map);
+}
+
+//指定只有某些类型可以使用的Mixin：使用on来指定可以使用Mixin的父类类型
+mixin MusicalPerformer on Musician {
+}
+
+//mixin关键字在Dart2.1中被引用支持，早期版本中的代码通常使用abstract class代替
