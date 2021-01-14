@@ -24,7 +24,18 @@ class Point2{
 
     //重写运算符
     Point2 operator +(Point2 p) => Point2(x + p.x, y + p.y);
+
     Point2 operator -(Point2 p) => Point2(x - p.x, y - p.y);
+
+    static const initialCapacity = 16; //常量，使用lowerCamelCase风格命名
+
+    static num distanceBetween(Point2 a, Point2 b) {
+        //静态方法(类方法)：不能在实例上使用，因此它们不能访问this
+        var dx = a.x - b.x;
+        var dy = a.y - b.y;
+        return sqrt(dx * dx + dy * dy);
+    }
+    //对于常见或广泛使用的工具和函数， 应该考虑使用顶级函数而不是静态方法
 
     @override
     void noSuchMethod(Invocation invocation) {
